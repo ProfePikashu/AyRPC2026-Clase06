@@ -1,0 +1,5 @@
+/* Opening original de AyRPC 2026, reproduccion completa antes del slide 01. */
+.opening-video{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;overflow:hidden;background:#000}
+.opening-video-media{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
+.opening-video-start{position:relative;z-index:2;padding:16px 28px;border:1px solid rgba(0,245,255,.5);border-radius:8px;color:#f5f7ff;background:rgba(5,5,16,.82);font-family:Orbitron,monospace;font-size:.75rem;font-weight:900;letter-spacing:.14em;cursor:pointer;box-shadow:0 0 18px rgba(0,245,255,.18),inset 0 0 16px rgba(168,85,247,.08);backdrop-filter:blur(10px)}
+.opening-video-start:hover{color:#00f5ff;border-color:#00f5ff;box-shadow:0 0 28px rgba(0,245,255,.28),0 0 45px rgba(168,85,247,.12)}

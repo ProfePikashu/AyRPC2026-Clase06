@@ -1,0 +1,2 @@
+import {topics} from '../data/workshop';
+export function TopicSlide({index,go}:{index:number;go:(value:number)=>void}){const t=topics[index];return <article className="slide c06-topic"><h1>{t.short}</h1>{index===1?<div className="c06-agenda">{topics.slice(2).map((item,i)=><button key={item.short} onClick={()=>go(i+2)}><b>{String(i+3).padStart(2,'0')} · {item.short}</b><span>{item.agendaDetail}</span></button>)}</div>:index===14?<p>Preguntas y respuestas</p>:<p>{t.agendaDetail}</p>}</article>}
