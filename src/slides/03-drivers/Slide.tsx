@@ -1,62 +1,69 @@
 import {useEffect,useState} from 'react';
-import type {CSSProperties} from 'react';
 import {GlossaryTerm} from '../../components/Glossary';
 import './slide.css';
-type Mode='specific'|'generic'|'bad'|'missing';
-type IconName='app'|'kernel'|'driver'|'hardware';
-const devices=[
- {name:'Mouse USB',app:'Aplicación de diseño',hardware:'Mouse USB',ask:'Quiero cambiar el DPI del mouse.',genericAsk:'Quiero mover el cursor.',technical:'Solicitud de configuración HID específica del fabricante',base:'Reporte HID estándar',command:'SET_REPORT (específico del dispositivo)',reply:'Configuración aceptada',result:'DPI configurado',limited:'El cursor se mueve; el ajuste especial no está disponible.',error:'El dispositivo rechaza el comando no compatible.',pnp:'USB HID'},
- {name:'Audio',app:'Reproductor',hardware:'Códec / interfaz de audio',ask:'Quiero usar la salida multicanal.',genericAsk:'Quiero reproducir sonido.',technical:'Configuración de canales y flujo de audio',base:'Flujo de audio estándar',command:'Configurar formato y canales admitidos',reply:'Flujo disponible',result:'Audio multicanal disponible',limited:'Audio básico disponible; funciones adicionales no expuestas.',error:'El formato solicitado no se puede configurar.',pnp:'Dispositivo de audio'},
- {name:'Video',app:'Aplicación 3D',hardware:'GPU',ask:'Quiero renderizar esta escena en la GPU.',genericAsk:'Quiero mostrar el escritorio.',technical:'Solicitud de aceleración gráfica mediante API',base:'Presentación básica de imagen',command:'Preparar y enviar trabajo a la GPU',reply:'Trabajo completado',result:'Aceleración gráfica disponible',limited:'Imagen básica; aceleración del fabricante no disponible.',error:'La inicialización de la ruta gráfica falla.',pnp:'Adaptador de pantalla'}];
-const modes:{id:Mode;label:string}[]=[{id:'specific',label:'Específico'},{id:'generic',label:'Genérico / base'},{id:'bad',label:'Incompatible'},{id:'missing',label:'Sin driver'}];
-function Glyph({kind}:{kind:IconName}){
- return <svg viewBox="0 0 100 80" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
- {kind==='app'?<><rect x="10" y="9" width="80" height="52" rx="6"/><path d="M10 22h80M38 70h24M50 61v9"/><circle cx="18" cy="16" r="1"/><circle cx="25" cy="16" r="1"/><path d="m36 32-10 9 10 9m28-18 10 9-10 9M54 30l-8 22"/></>:kind==='kernel'?<><rect x="20" y="10" width="60" height="60" rx="9"/><rect x="32" y="22" width="36" height="36" rx="5"/><path d="M34 3v7M50 3v7M66 3v7M34 70v7M50 70v7M66 70v7M13 24h7M13 40h7M13 56h7M80 24h7M80 40h7M80 56h7"/><path d="m43 32 14 16m0-16-14 16"/></>:kind==='driver'?<><path d="M12 14h55a8 8 0 0 1 8 8v20a8 8 0 0 1-8 8H36L22 62V50H12a7 7 0 0 1-7-7V22a8 8 0 0 1 7-8Z"/><path d="M79 31h10a6 6 0 0 1 6 6v22a6 6 0 0 1-6 6h-9v9L66 65H45a6 6 0 0 1-6-6"/><path d="M19 26h28M33 26v12m-9 3h19m9-5 8 8 8-8"/></>:<><rect x="10" y="8" width="80" height="64" rx="5"/><rect x="36" y="25" width="29" height="29" rx="3"/><path d="M18 18h16v14M82 18H65v7M18 63h16V48M82 63H65V48M10 40h26M65 40h25"/><circle cx="20" cy="18" r="3"/><circle cx="80" cy="63" r="3"/></>}
- </svg>
+type Mode='ok'|'base'|'fail';
+type Frame={at:number;to:number;token:string;caption:string;technical:string;action:string};
+const common:Frame[]=[
+ {at:0,to:0,token:'PEDIDO',caption:'Necesito hacer algo.',technical:'La aplicación solicita una operación al sistema operativo.',action:'prepare'},
+ {at:0,to:1,token:'PEDIDO',caption:'El software entrega su pedido.',technical:'La solicitud llega a los servicios del sistema operativo.',action:'pass'},
+ {at:1,to:1,token:'PEDIDO',caption:'¿A qué dispositivo va esto?',technical:'El SO identifica la ruta de entrada/salida correspondiente.',action:'inspect'},
+ {at:1,to:2,token:'PEDIDO',caption:'El sistema se lo pasa al intérprete.',technical:'La solicitud se dirige a la pila de controladores.',action:'pass'},
+];
+const routes:Record<Mode,Frame[]>={ok:[...common,
+ {at:2,to:2,token:'COMANDO',caption:'¡Ahora está en el idioma del hardware!',technical:'El controlador prepara la operación mediante la interfaz del dispositivo.',action:'inspect'},
+ {at:2,to:3,token:'COMANDO',caption:'El intérprete entrega la orden.',technical:'La pila transmite los comandos correspondientes.',action:'pass'},
+ {at:3,to:3,token:'DATOS',caption:'El hardware realiza el trabajo.',technical:'El dispositivo ejecuta la operación y produce datos o un estado.',action:'inspect'},
+ {at:3,to:2,token:'DATOS',caption:'El hardware devuelve su respuesta.',technical:'La respuesta llega al controlador.',action:'pass'},
+ {at:2,to:2,token:'RESULTADO',caption:'El intérprete adapta la respuesta.',technical:'El controlador comunica el resultado de la operación al SO.',action:'inspect'},
+ {at:2,to:1,token:'RESULTADO',caption:'La respuesta vuelve al sistema.',technical:'El subsistema del SO recibe el resultado.',action:'pass'},
+ {at:1,to:0,token:'RESULTADO',caption:'¡El software recibió lo que necesitaba!',technical:'La aplicación recibe la finalización de la operación.',action:'pass'},
+ {at:0,to:0,token:'✓',caption:'¡Todos se entendieron!',technical:'Operación completada correctamente.',action:'celebrate'}],
+ base:[...common,
+ {at:2,to:2,token:'BÁSICO',caption:'Entiendo el idioma común, pero no todas las funciones especiales.',technical:'Un controlador genérico puede cubrir las funciones normalizadas del dispositivo.',action:'inspect'},
+ {at:2,to:3,token:'BÁSICO',caption:'Le paso una orden estándar.',technical:'Se utiliza una operación compatible con el estándar.',action:'pass'},
+ {at:3,to:3,token:'DATOS',caption:'¡Puedo hacer eso!',technical:'El hardware ejecuta la operación estándar.',action:'inspect'},
+ {at:3,to:2,token:'DATOS',caption:'La respuesta vuelve al intérprete.',technical:'El controlador recibe el estado o los datos.',action:'pass'},
+ {at:2,to:1,token:'RESULTADO',caption:'Le devuelvo el resultado al sistema.',technical:'La pila comunica el resultado.',action:'pass'},
+ {at:1,to:0,token:'RESULTADO',caption:'El software recibe una respuesta.',technical:'Se completa la función estándar.',action:'pass'},
+ {at:0,to:0,token:'✓',caption:'¡Funciona! Algunas funciones especiales podrían faltar.',technical:'Un driver genérico también puede cubrir todas las funciones si el estándar es suficiente.',action:'celebrate'}],
+ fail:[...common,
+ {at:2,to:2,token:'!',caption:'¡El intérprete no responde!',technical:'En este ejemplo, el controlador falla y no puede procesar la solicitud.',action:'sleep'},
+ {at:2,to:1,token:'ERROR',caption:'El sistema recibe un error o detecta que no hay respuesta.',technical:'La operación puede fallar o agotar su tiempo de espera.',action:'pass'},
+ {at:1,to:0,token:'ERROR',caption:'El software no consigue el resultado.',technical:'El hardware no recibió una orden funcional en este ejemplo.',action:'pass'},
+ {at:0,to:0,token:'!',caption:'El hardware sigue ahí, pero no podemos utilizarlo correctamente.',technical:'Un controlador defectuoso puede provocar fallos e inestabilidad.',action:'error'}]};
+const names=['Software','Sistema operativo','Controlador','Hardware'];
+const colors=['#56b8ed','#8dd89a','#f7c85e','#f58b72'];
+function Mascot({i,active,sleeping,action}:{i:number;active:boolean;sleeping:boolean;action:string}){
+ const c=colors[i];
+ return <svg viewBox="0 0 180 168" className={'d3-mascot '+(active?'is-active ':'')+(sleeping?'is-asleep':'')} data-action={active?action:''} aria-hidden="true">
+ <ellipse cx="90" cy="150" rx="58" ry="8" fill="#000" opacity=".25"/>
+ <g className="d3-body" stroke="#12212b" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round">
+ <path d="M62 124v15M118 124v15" fill="none"/>
+ <path d="M62 137q-19-2-20 10h35v-9zM118 137q19-2 20 10h-35v-9z" fill={c}/>
+ <g className="d3-arm-left"><path d="M36 77Q15 83 20 103" fill="none"/><circle cx="20" cy="104" r="9" fill="#f2f5ef"/></g>
+ <g className="d3-arm-right"><path d="M144 77q21 6 16 26" fill="none"/><circle cx="160" cy="104" r="9" fill="#f2f5ef"/></g>
+ {i===0?<><rect x="31" y="28" width="118" height="100" rx="19" fill={c}/><path d="M32 49h116" stroke="#267aa9"/><circle cx="43" cy="39" r="2" fill="#fff" stroke="none"/><circle cx="52" cy="39" r="2" fill="#fff" stroke="none"/><path d="m77 108-9 6 9 6m26-12 9 6-9 6m-8-15-7 18" stroke="#246c94" strokeWidth="3"/></>:i===1?<><path d="M75 27V16h30v11l11-4 10 10-4 12H58l-4-12 10-10z" fill="#5fae70"/><rect x="32" y="32" width="116" height="94" rx="21" fill={c}/><rect x="42" y="42" width="96" height="74" rx="15" fill="#a3e5ad" stroke="#4b9460" strokeWidth="2"/></>:i===2?<><rect x="29" y="30" width="122" height="97" rx="32" fill={c}/><path d="M46 52q44-35 88 0" fill="none" stroke="#fff1bb" strokeWidth="5"/><path d="M79 112h22m-17-5-5 5 5 5m12-10 5 5-5 5" stroke="#9e6a22" strokeWidth="3"/><rect x="23" y="63" width="12" height="30" rx="5" fill="#d7a442"/><rect x="145" y="63" width="12" height="30" rx="5" fill="#d7a442"/></>:<><rect x="31" y="30" width="118" height="97" rx="17" fill={c}/><path d="M42 42h12v13m84-13h-12v13M42 114h12v-12m84 12h-12v-12" stroke="#b85d4c" strokeWidth="3" fill="none"/><rect x="69" y="106" width="42" height="12" rx="3" fill="#5d726f"/><path d="M76 102v4m9-4v4m10-4v4m9-4v4" strokeWidth="2"/></>}
+ <g className="d3-eyes">{sleeping?<><path d="M54 76q13 10 26 0m20 0q13 10 26 0" fill="none" strokeWidth="5"/><text x="132" y="24" fill="#a4b8c5" stroke="none" fontSize="18" fontWeight="bold">zZ</text></>:<>{[67,113].map(x=><g key={x}><ellipse cx={x} cy="77" rx="19" ry="24" fill="#fff" strokeWidth="3.5"/><ellipse className="d3-pupil" cx={x+3} cy="79" rx="10" ry="14" fill="#16242b" stroke="none"/><circle cx={x+6} cy="73" r="3.5" fill="white" stroke="none"/></g>)}</>}</g>
+ </g></svg>
 }
 export default function Slide(){
- const [device,setDevice]=useState(0),[mode,setMode]=useState<Mode>('specific'),[view,setView]=useState<'talk'|'pnp'>('talk');
- const [step,setStep]=useState(-1),[playing,setPlaying]=useState(false);
- const d=devices[device],generic=mode==='generic',bad=mode==='bad',missing=mode==='missing';
- const talk=[
- {actor:0,plain:generic?d.genericAsk:d.ask,tech:generic?'Solicitud de funcionalidad estándar':d.technical},
- {actor:1,plain:'Voy a dirigir tu pedido al dispositivo correcto.',tech:'Servicios del SO y subsistema de E/S encaminan la solicitud.'},
- {actor:2,plain:missing?'No hay un intérprete compatible.':bad?'No puedo interpretar correctamente este pedido.':generic?'Entiendo el idioma estándar.': 'Traduzco tu pedido al protocolo del dispositivo.',tech:missing?'No existe una pila funcional para esta operación.':bad?'El controlador falla al procesar o preparar la operación.':generic?d.base:d.command},
- {actor:3,plain:bad?'No puedo ejecutar ese pedido.':'Recibido. Ejecuto la operación.',tech:bad?d.error:d.reply},
- {actor:2,plain:bad?'Tengo que informar el error.':'Recibí la respuesta; se la paso al sistema.',tech:bad?'Estado de error devuelto a la pila.':'Datos o estado de finalización.'},
- {actor:1,plain:'Le devuelvo el resultado a la aplicación.',tech:'El subsistema del SO completa la solicitud.'},
- {actor:0,plain:bad?'No salió bien.':generic?'Funciona, pero con limitaciones.':'¡Funcionó!',tech:bad?d.error:generic?d.limited:d.result}];
- const pnp=[
- {actor:3,plain:'¡Me acaban de conectar!',tech:'El bus detecta un dispositivo y lo enumera.'},
- {actor:1,plain:'¿Quién sos? Necesito identificarte.',tech:'PnP recibe los identificadores y características del dispositivo.'},
- {actor:3,plain:'Estos son mis identificadores.',tech:'Clase / dispositivo: '+d.pnp},
- {actor:1,plain:'Busco un controlador compatible.',tech:'El sistema selecciona un paquete compatible disponible.'},
- {actor:2,plain:missing?'No encontraron un controlador compatible.':bad?'La inicialización del controlador falló.':generic?'Puedo manejar las funciones estándar.':'Puedo manejar las funciones admitidas por este dispositivo.',tech:missing?'Sin controlador funcional.':bad?'El paquete seleccionado no logra iniciar el dispositivo.':'Se carga la pila seleccionada y se inicia el dispositivo.'},
- {actor:0,plain:missing||bad?'Todavía no puedo usarlo correctamente.':'¡Ya puedo usar el dispositivo!',tech:missing||bad?'Dispositivo sin funcionalidad esperada.':generic?'Funciones estándar disponibles.':'Funciones compatibles disponibles.'}];
- const frames=view==='pnp'?pnp:missing?talk.slice(0,3):talk;
- const last=frames.length-1;
- useEffect(()=>{if(!playing)return;const id=window.setTimeout(()=>{if(step>=last){setPlaying(false);return}setStep(step+1)},1700);return()=>window.clearTimeout(id)},[playing,step,last]);
- const reset=()=>{setPlaying(false);setStep(-1)};
- const frame=frames[step];
- const actor=frame?.actor??-1;
- const previous=frames[step-1]?.actor??actor;
- const labels=['Software','Sistema operativo','Driver','Hardware'];
- const details=[d.app,'Kernel y servicios',missing?'Sin controlador':generic?'Controlador genérico':bad?'Controlador con fallo':'Controlador específico',d.hardware];
- const kinds:IconName[]=['app','kernel','driver','hardware'];
- const status=step<last?'En espera del resultado':missing?'Operación no disponible':bad?'Error de comunicación':generic?'Funciones estándar':'Operación correcta';
- return <article className="slide drv03 drv03-v2">
- <header><h1>¿Qué es un driver?</h1><p>Un <strong>controlador de dispositivo</strong> es un componente de software que permite o interviene en la comunicación entre el sistema operativo y un dispositivo, gestionando operaciones de entrada, salida, configuración y control mediante las interfaces correspondientes.</p><div className="drv03-criollo"><strong>En criollo:</strong> es el intérprete entre lo que el software necesita y lo que el hardware entiende.</div></header>
- <section className="drv03-lab" aria-label="Simulación de comunicación">
- <div className="drv03-toolbar"><div className="drv03-choice">{([{id:'talk',label:'El intérprete'},{id:'pnp',label:'Plug and Play'}] as const).map(v=><button key={v.id} aria-pressed={view===v.id} onClick={()=>{reset();setView(v.id)}}>{v.label}</button>)}</div><div className="drv03-choice">{devices.map((v,i)=><button key={v.name} aria-pressed={device===i} onClick={()=>{reset();setDevice(i)}}>{v.name}</button>)}</div></div>
- <div className="drv03-mode"><span>Controlador:</span>{modes.map(v=><button key={v.id} data-mode={v.id} aria-pressed={mode===v.id} onClick={()=>{reset();setMode(v.id)}}>{v.label}</button>)}</div>
- <div className="drv03-theatre" data-mode={mode}>
- {labels.map((label,i)=><div className={'drv03-character '+(actor===i?'active':'')} key={label}><div className="drv03-bubble">{actor===i?frame.plain:<span>···</span>}</div><div className="drv03-glyph"><Glyph kind={kinds[i]}/></div><b>{label}</b><small>{details[i]}</small></div>)}
- {step>=0&&actor!==previous&&<div key={view+device+mode+step} className="drv03-packet" style={{'--from':(12.5+previous*25)+'%','--to':(12.5+actor*25)+'%'} as CSSProperties}/>}
+ const [mode,setMode]=useState<Mode>('ok'),[index,setIndex]=useState(0),[paused,setPaused]=useState(false);
+ const frames=routes[mode],frame=frames[index];
+ useEffect(()=>{if(paused)return;const timer=window.setTimeout(()=>setIndex(i=>(i+1)%frames.length),frame.action==='pass'?1250:frame.action==='inspect'?1900:2400);return()=>window.clearTimeout(timer)},[paused,index,frames,frame.action]);
+ const change=(m:Mode)=>{setMode(m);setIndex(0);setPaused(false)};
+ const color=frame.token==='ERROR'||frame.token==='!'?'error':frame.token==='COMANDO'||frame.token==='BÁSICO'?'command':frame.token==='DATOS'||frame.token==='RESULTADO'||frame.token==='✓'?'result':'request';
+ return <article className="slide d3">
+ <header><h1>¿Qué es un driver?</h1><p>Un <strong>controlador de dispositivo</strong> es un componente de software que permite o interviene en la comunicación entre el sistema operativo y un dispositivo, gestionando operaciones de entrada, salida, configuración y control mediante las interfaces correspondientes.</p><p className="d3-criollo"><b>En criollo:</b> es el intérprete entre lo que el software necesita y lo que el hardware entiende.</p></header>
+ <div className="d3-layout"><section className="d3-stage" aria-label="Animación de comunicación entre software y hardware">
+ <div className="d3-bar"><div className="d3-modes">{([{id:'ok',label:'Correcto'},{id:'base',label:'Genérico'},{id:'fail',label:'Con falla'}] as const).map(m=><button key={m.id} data-mode={m.id} aria-pressed={mode===m.id} onClick={()=>change(m.id)}>{m.label}</button>)}</div><div className="d3-controls"><button onClick={()=>setPaused(v=>!v)} aria-label={paused?'Reproducir':'Pausar'}>{paused?'▶':'Ⅱ'}</button><button onClick={()=>setIndex(0)} aria-label="Reiniciar animación">↻</button></div></div>
+ <div className={'d3-scene '+(paused?'paused':'')} data-mode={mode}>
+ <div className="d3-message" key={mode+index}>{frame.caption}</div>
+ <div className="d3-track"><div className="d3-line"/><div key={mode+index+'packet'} className={'d3-packet '+color+' '+frame.action} style={{left:(12.5+frame.to*25)+'%','--start':(12.5+frame.at*25)+'%'} as import('react').CSSProperties}>{frame.token}</div></div>
+ <div className="d3-cast">{names.map((n,i)=><div key={n} className="d3-person" style={{color:colors[i]}}><Mascot i={i} active={frame.to===i} sleeping={mode==='fail'&&i===2&&index>=4} action={frame.action}/><b>{n}</b>{i===2&&<small>El intérprete</small>}</div>)}</div>
  </div>
- <div className="drv03-readout" aria-live="polite"><span className="drv03-tech-tag">LECTURA TÉCNICA</span><strong>{frame?.tech??(view==='pnp'?'Conectá virtualmente un dispositivo para observar su detección y configuración.':'Elegí un controlador y observá cómo se procesa una solicitud.')}</strong><span className={'drv03-status '+(step===last?(bad||missing?'fail':generic?'limited':'ok'):'')}>{status}</span></div>
- <div className="drv03-play"><button onClick={()=>{if(playing){setPlaying(false);return}if(step===last||step<0)setStep(0);setPlaying(true)}}>{playing?'Pausar':step===last?'Repetir':step<0?view==='pnp'?'Conectar dispositivo':'Iniciar diálogo':'Continuar'}</button><button onClick={()=>{setPlaying(false);setStep(s=>s===last?0:s+1)}}>Paso a paso</button><button onClick={reset}>Reiniciar</button><div className="drv03-progress">{frames.map((_,i)=><span key={i} className={i<=step?'done':''}/>)}</div></div>
- </section>
- <div className="drv03-concepts"><div><b><GlossaryTerm term="Kernel">Kernel</GlossaryTerm></b><p>Núcleo del SO: administra recursos y servicios fundamentales.</p></div><div><b><GlossaryTerm term="PnP">Plug and Play</GlossaryTerm></b><p>Detecta, identifica y configura dispositivos; selecciona controladores compatibles.</p></div><div><b>Base / genérico</b><p>Implementa funciones comunes de una clase de dispositivos.</p></div><div><b>Específico</b><p>Puede exponer funciones adicionales propias del hardware.</p></div></div>
- <footer className="drv03-source">Modelo didáctico: los drivers pueden actuar en capas, en modo usuario o kernel; no todos acceden directamente al hardware. Un fallo puede causar errores o inestabilidad. <a href="https://learn.microsoft.com/en-us/windows-hardware/drivers/gettingstarted/what-is-a-driver-" target="_blank" rel="noreferrer">Microsoft Learn ↗</a></footer>
+ <div className="d3-technical"><span>QUÉ OCURRE REALMENTE</span><p aria-live="polite">{frame.technical}</p></div>
+ <div className="d3-legend"><span><i className="request"/> Solicitud</span><span><i className="command"/> Comando</span><span><i className="result"/> Respuesta</span><span><i className="error"/> Error</span></div>
+ </section><aside className="d3-side"><div><b><GlossaryTerm term="Kernel">Kernel</GlossaryTerm></b><p>Núcleo del sistema operativo. Administra recursos y servicios fundamentales.</p></div><div><b><GlossaryTerm term="PnP">Plug and Play</GlossaryTerm></b><p>Detecta, identifica y configura dispositivos; selecciona un controlador compatible cuando está disponible.</p></div><div><b>Base / genérico</b><p>Implementa funciones comunes o normalizadas de una clase de dispositivos.</p></div><div><b>Específico</b><p>Adaptado a un hardware; puede habilitar funciones adicionales.</p></div></aside></div>
+ <footer>Analogía simplificada: los controladores pueden trabajar en capas, en modo usuario o kernel. PnP interviene en la detección y configuración, no en cada operación. <a href="https://learn.microsoft.com/en-us/windows-hardware/drivers/gettingstarted/what-is-a-driver-" target="_blank" rel="noreferrer">Microsoft Learn ↗</a></footer>
  </article>
 }
