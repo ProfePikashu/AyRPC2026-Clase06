@@ -153,7 +153,7 @@ export default function App(){
     if(!img.alt.trim()||img.closest('[data-lightbox-ignore]'))return;
     img.tabIndex=0;
     img.setAttribute('role','button');
-    if(!img.title)img.title='Clic para ampliar · Enter o Espacio';
+
    });
   };
   makeAccessible();
