@@ -1,0 +1,2 @@
+# Slide 06
+Driver Booster, SDIO y DriverIdentifier: capturas reales de versiones históricas identificadas, referencias oficiales, diferencias y riesgos. Mascota fija con mirada y señalador orientado al cursor. Tres casos ilustrativos seleccionables, sin ejecución de instalación real. Descarga local de capturas sin sobrescribir mediante preparar-slide06.ps1. No se ha comprobado descarga local, derechos de redistribución, compilación ni composición PC/Mobile.
