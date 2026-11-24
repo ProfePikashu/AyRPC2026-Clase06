@@ -26,3 +26,14 @@
 /* The application stops when the OS bug-checks: brief glitch, then frozen X eyes. */
 .d3-mascot.reaction-glitch .d3-body{animation:d3-software-glitch .65s steps(4,end) 1 both;filter:none;animation-delay:0s}
 .d3-mascot.reaction-glitch .d3-arm-left,.d3-mascot.reaction-glitch .d3-arm-right{animation:none!important}
+
+/* V7: dramatic kernel crash, without full-screen flashes. */
+.d3-mascot.reaction-bsod{filter:drop-shadow(8px 0 #36d9ff) drop-shadow(-8px 0 #ff39b5);animation:d3-bsod-shell .46s steps(3,end) infinite}
+.d3-mascot.reaction-bsod .d3-body{animation:d3-bsod-chaos .57s steps(4,end) infinite;animation-delay:0s;transform-origin:50% 60%}
+.d3-mascot.reaction-bsod .d3-eyes{animation:d3-bsod-eyes .71s steps(3,end) infinite}
+@keyframes d3-bsod-shell{0%,100%{transform:translate(0,0)}20%{transform:translate(-7px,2px)}45%{transform:translate(9px,-3px)}70%{transform:translate(-5px,3px)}}
+@keyframes d3-bsod-chaos{0%,100%{transform:none;clip-path:inset(0)}25%{transform:translateX(-7px) skewX(13deg) scale(1.06,.94);clip-path:polygon(0 0,100% 0,100% 29%,91% 29%,91% 42%,100% 42%,100% 100%,0 100%)}50%{transform:translateX(8px) skewX(-11deg) scale(.94,1.06);clip-path:polygon(0 0,100% 0,100% 100%,0 100%,0 64%,12% 64%,12% 48%,0 48%)}75%{transform:translateY(-4px) rotate(4deg) skewX(7deg);clip-path:inset(0)}}
+@keyframes d3-bsod-eyes{0%,100%{transform:none}33%{transform:translateX(-5px) skewX(15deg)}66%{transform:translateX(6px) skewX(-12deg)}}
+/* Large scalloped bites: missing capabilities, not corrupted data. */
+.d3-handtrack .d3-packet.bitten{width:126px;max-width:126px;min-height:38px;padding:7px 38px 7px 9px;border-radius:7px;clip-path:none;mask-image:radial-gradient(circle 15px at 100% 6px,transparent 98%,#000 100%),radial-gradient(circle 19px at 98% 23px,transparent 98%,#000 100%),radial-gradient(circle 13px at 76% 100%,transparent 98%,#000 100%),radial-gradient(circle 9px at 5% 100%,transparent 98%,#000 100%),radial-gradient(circle 10px at 52% 0%,transparent 98%,#000 100%);mask-composite:intersect}
+@media(prefers-reduced-motion:reduce){.d3-mascot.reaction-bsod{filter:drop-shadow(3px 0 #36d9ff) drop-shadow(-3px 0 #ff39b5)}}
