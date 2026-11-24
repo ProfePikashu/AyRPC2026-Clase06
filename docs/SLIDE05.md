@@ -1,0 +1,2 @@
+# Slide 05 — Métodos de instalación
+Orden pedagógico Windows: Windows Update → fabricante → terceros → Hardware ID. Linux es comparación de objetivos, no orden universal. Mazo con intercambio por flechas, cuatro tarjetas seleccionables y explicación expandible. Rutas visuales esquemáticas (no capturas reales). No depende de recursos externos para renderizar; enlaces de referencia externos. Pendiente verificación local TypeScript y visual PC/Mobile.
