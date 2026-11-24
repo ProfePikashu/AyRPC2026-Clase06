@@ -1,2 +1,4 @@
 # Slide 03 — Intérprete animado v3
 Cuatro mascotas SVG originales compactas, sin boca, con patas cortas. Animación automática cíclica de petición, análisis, comando, ejecución y respuesta. Tres modos: correcto, genérico, fallo ilustrativo (controlador dormido). Pausa y reinicio. Sin selectores de dispositivos ni avance manual. Conceptos Kernel, PnP, genérico y específico en lateral; PnP separado de la ruta de E/S. No requiere medios externos. Fuente: https://learn.microsoft.com/en-us/windows-hardware/drivers/gettingstarted/what-is-a-driver- . Pendiente check y revisión visual PC/Mobile.
+
+Reacciones de fallo: hardware sorprendido con salto y luego rascándose la cabeza; SO con ojos azules estilo BSOD al recibir el error. El BSOD es una caricatura de un posible fallo grave en kernel, no el resultado obligatorio de un controlador defectuoso.

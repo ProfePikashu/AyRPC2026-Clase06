@@ -28,14 +28,14 @@ const routes:Record<Mode,Frame[]>={ok:[...common,
  {at:0,to:0,token:'✓',caption:'¡Funciona! Algunas funciones especiales podrían faltar.',technical:'Un driver genérico también puede cubrir todas las funciones si el estándar es suficiente.',action:'celebrate'}],
  fail:[...common,
  {at:2,to:2,token:'!',caption:'¡El intérprete no responde!',technical:'En este ejemplo, el controlador falla y no puede procesar la solicitud.',action:'sleep'},
- {at:2,to:1,token:'ERROR',caption:'El sistema recibe un error o detecta que no hay respuesta.',technical:'La operación puede fallar o agotar su tiempo de espera.',action:'pass'},
+ {at:2,to:1,token:'ERROR',caption:'El sistema recibe un error o detecta que no hay respuesta.',technical:'La operación puede fallar o agotar su tiempo de espera; un fallo grave de un driver en kernel puede causar un BSOD (no ocurre en todos los errores).',action:'pass'},
  {at:1,to:0,token:'ERROR',caption:'El software no consigue el resultado.',technical:'El hardware no recibió una orden funcional en este ejemplo.',action:'pass'},
  {at:0,to:0,token:'!',caption:'El hardware sigue ahí, pero no podemos utilizarlo correctamente.',technical:'Un controlador defectuoso puede provocar fallos e inestabilidad.',action:'error'}]};
 const names=['Software','Sistema operativo','Controlador','Hardware'];
 const colors=['#56b8ed','#8dd89a','#f7c85e','#f58b72'];
-function Mascot({i,active,sleeping,action}:{i:number;active:boolean;sleeping:boolean;action:string}){
+function Mascot({i,active,sleeping,action,reaction}:{i:number;active:boolean;sleeping:boolean;action:string;reaction:'none'|'surprise'|'scratch'|'bsod'}){
  const c=colors[i];
- return <svg viewBox="0 0 180 168" className={'d3-mascot '+(active?'is-active ':'')+(sleeping?'is-asleep':'')} data-action={active?action:''} aria-hidden="true">
+ return <svg viewBox="0 0 180 168" className={'d3-mascot '+(active?'is-active ':'')+(sleeping?'is-asleep':'')+' reaction-'+reaction} data-action={active?action:''} aria-hidden="true">
  <ellipse cx="90" cy="150" rx="58" ry="8" fill="#000" opacity=".25"/>
  <g className="d3-body" stroke="#12212b" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round">
  <path d="M62 124v15M118 124v15" fill="none"/>
@@ -43,7 +43,10 @@ function Mascot({i,active,sleeping,action}:{i:number;active:boolean;sleeping:boo
  <g className="d3-arm-left"><path d="M36 77Q15 83 20 103" fill="none"/><circle cx="20" cy="104" r="9" fill="#f2f5ef"/></g>
  <g className="d3-arm-right"><path d="M144 77q21 6 16 26" fill="none"/><circle cx="160" cy="104" r="9" fill="#f2f5ef"/></g>
  {i===0?<><rect x="31" y="28" width="118" height="100" rx="19" fill={c}/><path d="M32 49h116" stroke="#267aa9"/><circle cx="43" cy="39" r="2" fill="#fff" stroke="none"/><circle cx="52" cy="39" r="2" fill="#fff" stroke="none"/><path d="m77 108-9 6 9 6m26-12 9 6-9 6m-8-15-7 18" stroke="#246c94" strokeWidth="3"/></>:i===1?<><path d="M75 27V16h30v11l11-4 10 10-4 12H58l-4-12 10-10z" fill="#5fae70"/><rect x="32" y="32" width="116" height="94" rx="21" fill={c}/><rect x="42" y="42" width="96" height="74" rx="15" fill="#a3e5ad" stroke="#4b9460" strokeWidth="2"/></>:i===2?<><rect x="29" y="30" width="122" height="97" rx="32" fill={c}/><path d="M46 52q44-35 88 0" fill="none" stroke="#fff1bb" strokeWidth="5"/><path d="M79 112h22m-17-5-5 5 5 5m12-10 5 5-5 5" stroke="#9e6a22" strokeWidth="3"/><rect x="23" y="63" width="12" height="30" rx="5" fill="#d7a442"/><rect x="145" y="63" width="12" height="30" rx="5" fill="#d7a442"/></>:<><rect x="31" y="30" width="118" height="97" rx="17" fill={c}/><path d="M42 42h12v13m84-13h-12v13M42 114h12v-12m84 12h-12v-12" stroke="#b85d4c" strokeWidth="3" fill="none"/><rect x="69" y="106" width="42" height="12" rx="3" fill="#5d726f"/><path d="M76 102v4m9-4v4m10-4v4m9-4v4" strokeWidth="2"/></>}
- <g className="d3-eyes">{sleeping?<><path d="M54 76q13 10 26 0m20 0q13 10 26 0" fill="none" strokeWidth="5"/><text x="132" y="24" fill="#a4b8c5" stroke="none" fontSize="18" fontWeight="bold">zZ</text></>:<>{[67,113].map(x=><g key={x}><ellipse cx={x} cy="77" rx="19" ry="24" fill="#fff" strokeWidth="3.5"/><ellipse className="d3-pupil" cx={x+3} cy="79" rx="10" ry="14" fill="#16242b" stroke="none"/><circle cx={x+6} cy="73" r="3.5" fill="white" stroke="none"/></g>)}</>}</g>
+ {reaction==='scratch'&&<g className="d3-scratch" stroke="#12212b"><path d="M142 79 Q169 61 151 38" fill="none"/><circle cx="150" cy="36" r="9" fill="#f2f5ef"/><path d="m146 33 5 5m0-8 5 5" strokeWidth="2"/></g>}
+ {reaction==='surprise'&&<g fill="#f7c85e" stroke="none"><path d="M139 12l9-8 3 4-9 8zM158 22l12-2 1 5-12 2z"/><text x="19" y="23" fontSize="23" fontWeight="bold">!</text></g>}
+ {reaction==='scratch'&&<text x="18" y="24" fill="#f7c85e" stroke="none" fontSize="23" fontWeight="bold">?</text>}
+ <g className="d3-eyes">{reaction==='bsod'?<>{[67,113].map(x=><g key={x}><rect x={x-19} y="54" width="38" height="46" rx="8" fill="#0878d1" stroke="#10365d" strokeWidth="3"/><text x={x} y="74" textAnchor="middle" fill="white" stroke="none" fontSize="17" fontWeight="bold">:(</text><path d={`M${x-11} 82h22m-22 5h15m-15 5h19`} stroke="#e2f4ff" strokeWidth="1.5"/></g>)}</>:sleeping?<><path d="M54 76q13 10 26 0m20 0q13 10 26 0" fill="none" strokeWidth="5"/><text x="132" y="24" fill="#a4b8c5" stroke="none" fontSize="18" fontWeight="bold">zZ</text></>:<>{[67,113].map(x=><g key={x}><ellipse cx={x} cy="77" rx={reaction==='surprise'?21:19} ry={reaction==='surprise'?28:24} fill="#fff" strokeWidth="3.5"/><ellipse className="d3-pupil" cx={x+(reaction==='scratch'?-6:3)} cy={reaction==='scratch'?73:79} rx={reaction==='surprise'?6:10} ry={reaction==='surprise'?9:14} fill="#16242b" stroke="none"/><circle cx={x+6} cy="73" r="3.5" fill="white" stroke="none"/></g>)}</>}</g>
  </g></svg>
 }
 export default function Slide(){
@@ -59,7 +62,7 @@ export default function Slide(){
  <div className={'d3-scene '+(paused?'paused':'')} data-mode={mode}>
  <div className="d3-message" key={mode+index}>{frame.caption}</div>
  <div className="d3-track"><div className="d3-line"/><div key={mode+index+'packet'} className={'d3-packet '+color+' '+frame.action} style={{left:(12.5+frame.to*25)+'%','--start':(12.5+frame.at*25)+'%'} as import('react').CSSProperties}>{frame.token}</div></div>
- <div className="d3-cast">{names.map((n,i)=><div key={n} className="d3-person" style={{color:colors[i]}}><Mascot i={i} active={frame.to===i} sleeping={mode==='fail'&&i===2&&index>=4} action={frame.action}/><b>{n}</b>{i===2&&<small>El intérprete</small>}</div>)}</div>
+ <div className="d3-cast">{names.map((n,i)=><div key={n} className="d3-person" style={{color:colors[i]}}><Mascot i={i} active={frame.to===i} sleeping={mode==='fail'&&i===2&&index>=4} action={frame.action} reaction={mode==='fail'?(i===3&&index===4?'surprise':i===3&&index>=5?'scratch':i===1&&index>=5?'bsod':'none'):'none'}/><b>{n}</b>{i===2&&<small>El intérprete</small>}</div>)}</div>
  </div>
  <div className="d3-technical"><span>QUÉ OCURRE REALMENTE</span><p aria-live="polite">{frame.technical}</p></div>
  <div className="d3-legend"><span><i className="request"/> Solicitud</span><span><i className="command"/> Comando</span><span><i className="result"/> Respuesta</span><span><i className="error"/> Error</span></div>
