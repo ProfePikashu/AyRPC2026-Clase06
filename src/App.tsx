@@ -11,9 +11,10 @@ import DriverSlide from './slides/03-drivers/Slide';
 import DeviceSlide from './slides/04-dispositivos/Slide';
 import InstallSlide from './slides/05-instalacion/Slide';
 import ThirdPartySlide from './slides/06-terceros/Slide';
+import HardwareIdSlide from './slides/07-hardware-id/Slide';
 import {TopicSlide} from './slides/TopicSlide';
 const labels=topics.map(topic=>topic.short);
-const slides=[Slide01,...topics.slice(1).map((_,i)=>({go}:{go:(value:number)=>void})=>i===1?<DriverSlide/>:i===2?<DeviceSlide/>:i===3?<InstallSlide/>:i===4?<ThirdPartySlide/>:<TopicSlide index={i+1} go={go}/>)]
+const slides=[Slide01,...topics.slice(1).map((_,i)=>({go}:{go:(value:number)=>void})=>i===1?<DriverSlide/>:i===2?<DeviceSlide/>:i===3?<InstallSlide/>:i===4?<ThirdPartySlide/>:i===5?<HardwareIdSlide/>:<TopicSlide index={i+1} go={go}/>)]
 type ZoomGesture=
  |{kind:'pinch';distance:number;zoom:number;pan:Pan;point:Point}
  |{kind:'drag';point:Point;pan:Pan};
