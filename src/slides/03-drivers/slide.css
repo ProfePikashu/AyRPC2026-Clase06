@@ -22,3 +22,7 @@
 @keyframes d3-toss{0%{left:var(--start);transform:translate(-50%,-50%) rotate(-12deg)}50%{transform:translate(-50%,-50%) translateY(-95px) rotate(13deg)}100%{left:var(--end);transform:translate(-50%,-50%) rotate(0)}}
 @keyframes d3-catch-left{50%{transform:rotate(25deg)}}@keyframes d3-catch-right{50%{transform:rotate(-25deg)}}
 @keyframes d3-software-glitch{0%,100%{transform:none;opacity:1}25%{transform:translateX(-5px) skewX(3deg);opacity:.75}50%{transform:translateX(5px) skewX(-4deg);opacity:1}75%{transform:translateY(3px);opacity:.6}}
+
+/* The application stops when the OS bug-checks: brief glitch, then frozen X eyes. */
+.d3-mascot.reaction-glitch .d3-body{animation:d3-software-glitch .65s steps(4,end) 1 both;filter:none;animation-delay:0s}
+.d3-mascot.reaction-glitch .d3-arm-left,.d3-mascot.reaction-glitch .d3-arm-right{animation:none!important}

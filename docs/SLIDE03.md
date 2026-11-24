@@ -4,3 +4,5 @@ Cuatro mascotas SVG originales compactas, sin boca, con patas cortas. Animación
 Reacciones de fallo: hardware sorprendido con salto y luego rascándose la cabeza; SO con ojos azules estilo BSOD al recibir el error. El BSOD es una caricatura de un posible fallo grave en kernel, no el resultado obligatorio de un controlador defectuoso.
 
 V5: cuatro modos (correcto, genérico, ausente, crítico). Ausente sin BSOD; crítico representa bug check fatal, software con glitch y sin respuesta normal. Guantes grandes, paquetes lanzados en arco entre manos, mirada hacia la tarjeta y resultado genérico con mordisco como metáfora de funciones no disponibles, no corrupción de datos. Pendiente QA visual y TypeScript.
+
+V6: al entrar el SO en BSOD, software muestra ojos X__X, un glitch breve y queda inmóvil hasta el reinicio de la demostración.
