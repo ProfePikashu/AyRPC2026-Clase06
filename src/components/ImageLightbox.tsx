@@ -27,7 +27,7 @@ export function ImageLightbox({item,onClose}:{item:ImagePreview;onClose:()=>void
  return createPortal(
   <div className="image-lightbox-backdrop" role="presentation"
    onPointerDown={event=>{if(event.target===event.currentTarget)onClose()}}>
-   <section className="image-lightbox-window" role="dialog" aria-modal="true" aria-label={'Vista ampliada: '+item.title}>
+   <section className={"image-lightbox-window"+(item.alt==="Dell · Propiedades e identificadores PCI"?" image-lightbox-hardware-id":"")} role="dialog" aria-modal="true" aria-label={'Vista ampliada: '+item.title}>
     <button ref={closeRef} className="image-lightbox-close" type="button"
      aria-label="Cerrar imagen ampliada" title="Cerrar (Esc)" onClick={onClose}>×</button>
     <img src={item.src} alt={item.alt} decoding="async"/>

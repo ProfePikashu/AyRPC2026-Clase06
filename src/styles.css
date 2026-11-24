@@ -2604,3 +2604,8 @@ html,body,#root{height:100%;min-height:0;overflow:hidden}
 .atlas-ph-evidence>a{font-size:11px;color:#9fdaff;text-decoration:underline;text-underline-offset:2px}
 
 :root{background:#080f14;color:#eef8f6}.c06-topic{padding:52px;min-height:810px;background:linear-gradient(135deg,#080f14,#12232d);color:#eef8f6}.c06-topic h1{font-size:52px;color:#10b981;margin:0 0 32px}.c06-topic p{font-size:30px}.c06-agenda{display:grid;grid-template-columns:1fr 1fr;gap:12px}.c06-agenda button{display:flex;flex-direction:column;gap:5px;text-align:left;padding:12px 18px;border:1px solid #296454;background:#12232d;color:#eef8f6;border-radius:8px;font-size:20px}.c06-agenda button:hover{border-color:#10b981}.c06-agenda span{font-size:16px;color:#a8c9c4}.intro05-main h2{font-size:clamp(42px,5vw,78px)}
+
+/* Hardware ID: upscale small original screenshots in the modal, preserving aspect ratio. */
+.image-lightbox-window.image-lightbox-hardware-id{width:min(94vw,1500px);max-height:calc(96dvh - 12px);padding:12px;gap:6px}
+.image-lightbox-window.image-lightbox-hardware-id>img{width:100%;height:calc(86dvh - 45px);max-width:100%;max-height:calc(86dvh - 45px);object-fit:contain}
+@media(max-width:780px){.image-lightbox-window.image-lightbox-hardware-id{width:100%;padding:8px}.image-lightbox-window.image-lightbox-hardware-id>img{height:auto;width:100%;max-height:calc(92dvh - 70px)}}
