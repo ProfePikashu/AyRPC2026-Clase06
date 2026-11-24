@@ -9,3 +9,16 @@
 @keyframes d3-confused{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
 @keyframes d3-scratch-hand{from{transform:rotate(-8deg)}to{transform:rotate(8deg) translateY(2px)}}
 @keyframes d3-bsod-stutter{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-4px)}40%,80%{transform:translateX(4px)}}
+
+.d3 button[data-mode=absent][aria-pressed=true],.d3 button[data-mode=critical][aria-pressed=true]{background:#652c3a;border-color:#fb7185}
+.d3-cast{position:relative;padding-top:24px}.d3-handtrack{position:absolute;inset:24px 0 auto;height:175px;z-index:3;pointer-events:none}.d3-handtrack .d3-packet{top:59%;font-size:11px;padding:5px 7px;box-shadow:0 2px 6px #0008;max-width:105px}
+.d3-handtrack .d3-packet.pass{animation:d3-toss 1s ease-in-out both}
+.d3-handtrack .d3-packet.bitten{clip-path:polygon(0 0,73% 0,73% 10%,82% 10%,82% 22%,91% 22%,91% 33%,100% 33%,100% 100%,0 100%);padding-right:19px;border-radius:5px}
+.d3-mascot[data-hand=left].is-active .d3-arm-right,.d3-mascot[data-hand=right].is-active .d3-arm-left{animation:none}
+.d3-mascot[data-hand=left].is-active .d3-arm-left{animation:d3-catch-left .75s ease-in-out 1}
+.d3-mascot[data-hand=right].is-active .d3-arm-right{animation:d3-catch-right .75s ease-in-out 1}
+.d3-mascot.reaction-glitch .d3-body{animation:d3-software-glitch .95s steps(4,end) infinite;animation-delay:0s;filter:drop-shadow(3px 0 #f34fa1) drop-shadow(-3px 0 #40e9ff)}
+.d3-mascot.reaction-bsod .d3-arm-left,.d3-mascot.reaction-bsod .d3-arm-right,.d3-mascot.is-asleep .d3-arm-left,.d3-mascot.is-asleep .d3-arm-right{animation:none}
+@keyframes d3-toss{0%{left:var(--start);transform:translate(-50%,-50%) rotate(-12deg)}50%{transform:translate(-50%,-50%) translateY(-95px) rotate(13deg)}100%{left:var(--end);transform:translate(-50%,-50%) rotate(0)}}
+@keyframes d3-catch-left{50%{transform:rotate(25deg)}}@keyframes d3-catch-right{50%{transform:rotate(-25deg)}}
+@keyframes d3-software-glitch{0%,100%{transform:none;opacity:1}25%{transform:translateX(-5px) skewX(3deg);opacity:.75}50%{transform:translateX(5px) skewX(-4deg);opacity:1}75%{transform:translateY(3px);opacity:.6}}
