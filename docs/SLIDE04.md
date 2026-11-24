@@ -4,3 +4,5 @@ Captura real ASUS ROG con advertencias, origen https://rog-forum.asus.com/t5/faq
 V2: se retira la mascota móvil y el señalador (reservados para futura slide Hardware ID). Capturas Hardinfo PCI y Ubuntu Additional Drivers con fuente, ampliación global existente, descarga local mediante preparar-slide04.ps1. Terminal: tres casos ilustrativos (correcto, sin driver asociado, firmware no cargado) y rutas de diagnóstico diferenciadas. No se verificó descarga local ni licencia de redistribución. Pendiente revisión visual y check.
 
 V3: pestaña Comandos útiles con 24 comandos agrupados en hardware, drivers/errores, comprobación de actualizaciones y firmware. Copia individual, identificación de distribución, advertencias en acciones que modifican el sistema y referencias. No se ejecutan comandos desde la presentación. Pendiente check y revisión visual.
+
+V4: se elimina copia al portapapeles y se simplifica la lista. Las operaciones de instalación/actualización tienen un signo de exclamación rojo interactivo que revela la advertencia. No ejecuta comandos.
