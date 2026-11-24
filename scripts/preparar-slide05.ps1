@@ -6,7 +6,7 @@ $public = Join-Path $PSScriptRoot '..\public\clase6\slide05'
 New-Item -ItemType Directory -Path $folder,$public -Force | Out-Null
 $assets = @(
  @{ Name = 'windows-update-drivers.webp'; Url = 'https://ugetfix.com/pic/w1080q75/uploads/how-to/update-reinstall-driver-windows-11-04-windows-update-optional-updates.png.webp' },
- @{ Name = 'fabricante-soporte-drivers.png'; Url = 'https://kmpic.asus.com/images/2022/01/17/5c9fec33-ba9b-4913-b921-4ae766ad27ce.png' },
+ @{ Name = 'amd-x870e-soporte.png'; Url = 'https://www.amd.com/content/dam/amd/en/images/kb/chipset-install/chipset-install-2.png' },
  @{ Name = 'driver-booster-scan.jpg'; Url = 'https://www.iobit.com/product-manuals/db-help/images/scan-result.jpg' },
  @{ Name = 'device-manager-hardware-id.jpeg'; Url = 'https://supportkb.dell.com/img/ka0Do000000Zx0OIAS/ka0Do000000Zx0OIAS_en_US_4.jpeg' },
  @{ Name = 'linux-updates-kernel-firmware.png'; Url = 'https://ubuntu.com/desktop/docs/en/latest/_images/software-updater.png' },
