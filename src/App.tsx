@@ -7,9 +7,10 @@ import { OpeningVideo } from './components/OpeningVideo';
 import type { ImagePreview } from './components/ImageLightbox';
 import { topics } from './data/workshop';
 import Slide01 from './slides/01-portada/Slide';
+import DriverSlide from './slides/03-drivers/Slide';
 import {TopicSlide} from './slides/TopicSlide';
 const labels=topics.map(topic=>topic.short);
-const slides=[Slide01,...topics.slice(1).map((_,i)=>({go}:{go:(value:number)=>void})=><TopicSlide index={i+1} go={go}/>)]
+const slides=[Slide01,...topics.slice(1).map((_,i)=>({go}:{go:(value:number)=>void})=>i===1?<DriverSlide/>:<TopicSlide index={i+1} go={go}/>)]
 type ZoomGesture=
  |{kind:'pinch';distance:number;zoom:number;pan:Pan;point:Point}
  |{kind:'drag';point:Point;pan:Pan};

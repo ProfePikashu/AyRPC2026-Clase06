@@ -35,4 +35,5 @@ export const glossary:Entry[]=[
     "detail": "Sus atributos ayudan a evaluar el estado del disco, sin garantizar que no falle.",
     "example": "Revisar sectores pendientes."
   }
+, {"term":"Kernel","category":"Sistema operativo","definition":"Núcleo del sistema operativo.","detail":"Administra recursos y proporciona servicios fundamentales a otros componentes del sistema.","example":"Un controlador en modo kernel puede gestionar operaciones de entrada y salida."}
 ];
