@@ -9,7 +9,8 @@
     "build": "tsc --noEmit && vite build",
     "build:pc": "tsc --noEmit && vite build --mode pc --outDir dist-pc",
     "build:mobile": "tsc --noEmit && vite build --mode mobile --outDir dist-mobile",
-    "preview": "vite preview --host 0.0.0.0"
+    "preview": "vite preview --host 0.0.0.0",
+    "release": "node --test scripts/pack-standalone-clase06.test.mjs && node scripts/build-release-clase06.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",
