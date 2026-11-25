@@ -10,3 +10,5 @@ V4: seis descargas 403 observadas en consola del usuario (diskmgmt, sysdm, dxdia
 V5: MSCONFIG con cinco pestañas seleccionables, capturas de Guiding Tech y explicación contextual. Captura de Arranque comprobada en web; otras URL extraídas del artículo, descarga pendiente. Se preservan recursos locales previos y vista interactiva. Si falla la imagen se ofrece descripción y enlace fuente. Pendiente QA local.
 
 V6: acceso directo REGEDIT y captura real de Digital Citizen (https://www.digitalcitizen.life/simple-questions-what-windows-registry-and-what-does-it-do/), con claves y valores señalados. Descarga local preferida y alternativa remota. Advertencia de exportar clave y crear punto de restauración. No realiza cambios reales en el Registro. Pendiente descarga y QA local.
+
+V7: log local confirma 15/17 capturas existentes, REGEDIT y SYSDM bloqueadas con HTTP 403. Se cambian solo esas dos URL por imágenes visibles de Microsoft Q&A y All Things How respectivamente. Orígenes alternativos verificados visualmente en búsqueda de imágenes; descarga desde PowerShell pendiente. No se modifican recursos ya descargados ni otras slides.

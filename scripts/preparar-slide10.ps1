@@ -3,7 +3,7 @@ Add-Type -AssemblyName System.Drawing
 $dest = Join-Path $PSScriptRoot '..\public\clase6\slide10'
 New-Item -ItemType Directory -Path $dest -Force | Out-Null
 $assets = @{
-    'regedit.png' = 'https://www.digitalcitizen.life/wp-content/uploads/2023/07/regedit-5.png'
+    'regedit.png' = 'https://learn-attachment.microsoft.com/api/attachments/f65636b3-405b-42c7-a4e8-9f4d9e81fa54?platform=QnA'
     'taskmgr.png' = 'https://support.microsoft.com/en-us/windows/media/task-manager-performance.png'
     'dxdiag.png' = 'https://extras.foroswindows.com/img/post/69/version-directx-directx-12-ss.jpg'
     'perfmon.png' = 'https://learn.microsoft.com/en-us/troubleshoot/windows-server/performance/media/troubleshoot-performance-problems-in-windows/performance-monitor-and-data-collector-sets.png'
@@ -15,7 +15,7 @@ $assets = @{
     'eventvwr.png' = 'https://learn.microsoft.com/en-us/troubleshoot/windows-server/performance/media/troubleshoot-unexpected-reboots-system-event-logs/system-event-log-41-1001-6008.png'
     'msconfig.png' = 'https://www.guidingtech.com/wp-content/uploads/The-General-Tab.png'
     'reliability.webp' = 'https://rebootdoctor.com/images/blog/reliability-monitor-windows-11/step2-stability-chart-critical-event.webp'
-    'sysdm.png' = 'https://windowsreport.com/wp-content/uploads/2022/04/system-properties-1.png'
+    'sysdm.png' = 'https://storage.ghost.io/c/b9/32/b9320fa4-9d41-450c-82d4-f517eadd2af7/content/images/2024/08/Screenshot-2024-08-19-094547-2-1.png'
     'msconfig-boot.png' = 'https://www.guidingtech.com/wp-content/uploads/The-Boot-Tab.png'
     'msconfig-services.png' = 'https://www.guidingtech.com/wp-content/uploads/The-Services-Tab.png'
     'msconfig-startup.png' = 'https://www.guidingtech.com/wp-content/uploads/The-Startup-Tab.png'
