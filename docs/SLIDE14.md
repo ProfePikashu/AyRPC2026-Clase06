@@ -7,3 +7,5 @@ RST: diálogo de carga estilo Windows Setup, explorador de carpetas expandible c
 Inicio del laboratorio: botón de encendido, POST estilo ASUS con F2/F8, menú UEFI, carga de Windows, idioma/teclado, instalación, clave opcional, edición, términos, selección de disco y carga RST existente. Progreso de instalación y reinicio antes del OOBE. Arte vectorial y pantallas recreadas, sin firmware ni instalador real. Verificación visual local pendiente.
 
 Corrección del arranque: el reloj del laboratorio renderiza el padre cada segundo y recreaba onInstalled, reiniciando el timeout de POST/carga/reinicio. El efecto ahora depende únicamente de la fase y usa una referencia al callback más reciente. Carga desde USB de 3 segundos. Verificación visual local pendiente.
+
+OOBE: pantalla de conexión a red recreada con ilustración vectorial propia, panel Ethernet y botón Siguiente desactivado. Shift+F10 real y acceso visual a CMD ampliado; comando localonly abre formulario de cuenta local con contraseña opcional y confirmación. La VM gana espacio al reducir panel lateral a 170 px. No se usan capturas originales; QA visual pendiente.
