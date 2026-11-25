@@ -24,7 +24,7 @@ function checkMedia(){
  const missing=required.filter(([,file])=>!fs.existsSync(at(...file.split('/'))));
  if(missing.length)throw Error('Faltan recursos obligatorios:\n'+missing.map(([label,file])=>'  '+label+': '+file).join('\n'));
  const requiredFolders={'04':1,'05':1,'06':1,'09':1,'10':17,'11':23,'12':26};
- for(const [n,min] of Object.entries(requiredFolders)){const dir=at('public','clase6','slide'+n);const files=fs.existsSync(dir)?fs.readdirSync(dir).filter(x=>/\\.(png|jpe?g|gif|webp|svg)$/i.test(x)):[];if(files.length<min)console.warn('AVISO: revisar capturas slide '+n+' ('+files.length+'/'+min+')');}
+ for(const [n,min] of Object.entries(requiredFolders)){const dir=at('public','clase6','slide'+n);const files=fs.existsSync(dir)?fs.readdirSync(dir).filter(x=>/\.(png|jpe?g|gif|webp|svg)$/i.test(x)):[];if(files.length<min)console.warn('AVISO: revisar capturas slide '+n+' ('+files.length+'/'+min+')');}
  if(!fs.existsSync(at('public','clase6','slide12','furmark-demo.mp4')))throw Error('Falta el video FurMark aprobado: public/clase6/slide12/furmark-demo.mp4');
  console.log('Opening y piezas originales del logo: verificados.');
 }

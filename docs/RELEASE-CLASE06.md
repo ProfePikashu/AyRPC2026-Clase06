@@ -9,3 +9,6 @@ Adaptado de Clase 05 (rama preview/clase05-bios-uefi, commit 1a5602e0a5d816bfdf5
 5. powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\scripts\release-clase06.ps1"
 
 Dos HTML en release-single/Clase06-<timestamp>/, solo después de smoke real file://. PC incluye opening y FurMark; Mobile excluye únicamente opening y conserva FurMark. El packer no sustituye basenames sueltos. No se borran entregas previas. Los recursos locales aprobados deben permanecer en public/. No se ha ejecutado release ni smoke en la PC docente. Verificación visual final pendiente.
+
+## Primer intento local (25/11/2026)
+Logo y opening originales copiados con hash correcto; test packer, TypeScript y Vite PC/Mobile OK. PC 62.44 MiB (88 recursos, 2 videos), Mobile 42.04 MiB (87 recursos, 1 video). Smoke PC detenido por recurso opcional slide07/pci-intel-wifi-m2.png ausente. Los avisos 0/N provenían de una expresión regular con barra duplicada en el inventario, no prueban ausencia de capturas. Se corrige conteo y se utiliza directamente el SVG ya aprobado si la foto opcional no está embebida, sin request file:// inválido. Se mantiene bloqueo de publicación ante errores reales. Nuevo smoke pendiente.

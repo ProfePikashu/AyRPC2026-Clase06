@@ -67,6 +67,10 @@ export async function smokeStandalone(filename,profile){
    const selectors={3:'.d3-mascot',12:'.d12-monitor',13:'.h13-vm',14:'.l14-vm',15:'.q15-cast'};
    if(selectors[n]&&!await page.locator(selectors[n]).count())errors.push('Slide '+n+': falta escena principal.');
    if(n===15&&await page.locator('.q15-mascot svg').count()!==4)errors.push('Faltan los cuatro monigotes.');
+   if(n===7){
+    const picture=page.locator('.d7-device-image');
+    if(!await picture.locator('svg, img[src^="blob:"]').count())errors.push('Slide 07: falta imagen embebida o esquema SVG de respaldo.');
+   }
    const imgs=await page.locator('img').evaluateAll(async imgs=>Promise.all(imgs.filter(i=>i.getAttribute('src')?.startsWith('blob:')).map(async i=>{try{await i.decode()}catch{}return {src:i.src,width:i.naturalWidth}})));
    for(const img of imgs)if(!img.width)errors.push('Imagen embebida no decodifica en slide '+n+': '+img.src);
    const view=await page.evaluate(()=>({
