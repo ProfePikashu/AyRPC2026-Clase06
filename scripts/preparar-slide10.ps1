@@ -10,6 +10,11 @@ $assets = @{
     'services.png' = 'https://www.elevenforum.com/attachments/services-1-png.14766/'
     'diskmgmt.png' = 'https://www.elevenforum.com/attachments/disk_management_customize_view-1-png.115932/'
     'devmgmt.png' = 'https://km-ap.asus.com/uploads/PhotoLibrarys/8a53fc79-6a00-4a96-8408-a7e886967aef/20231101142421351_EN_1.png'
+    'msinfo32.webp' = 'https://bcdn.askleo.com/wp-content/uploads/2022/07/msinfo32-1200x630.jpg.webp'
+    'eventvwr.webp' = 'https://www.elevenforum.com/attachments/41-webp.166841/'
+    'msconfig.png' = 'https://www.elevenforum.com/attachments/change_default_os_msconfig-1-png.25537/'
+    'reliability.webp' = 'https://rebootdoctor.com/images/blog/reliability-monitor-windows-11/step2-stability-chart-critical-event.webp'
+    'sysdm.png' = 'https://www.elevenforum.com/attachments/change_default_os_system_properties-1-png.25539/'
 }
 foreach ($name in $assets.Keys) {
     $path = Join-Path $dest $name
@@ -17,8 +22,14 @@ foreach ($name in $assets.Keys) {
     $tmp = Join-Path $dest ($name + '.download')
     try {
         Invoke-WebRequest -UseBasicParsing -Uri $assets[$name] -OutFile $tmp -TimeoutSec 30
-        $img = [System.Drawing.Image]::FromFile($tmp)
-        try { $img.Save($path, [System.Drawing.Imaging.ImageFormat]::Png) } finally { $img.Dispose() }
+        if ($name.EndsWith('.webp')) {
+            $bytes = [System.IO.File]::ReadAllBytes($tmp)
+            if ($bytes.Length -lt 12 -or [Text.Encoding]::ASCII.GetString($bytes,0,4) -ne 'RIFF' -or [Text.Encoding]::ASCII.GetString($bytes,8,4) -ne 'WEBP') { throw 'Not a WebP image' }
+            Copy-Item -LiteralPath $tmp -Destination $path
+        } else {
+            $img = [System.Drawing.Image]::FromFile($tmp)
+            try { $img.Save($path, [System.Drawing.Imaging.ImageFormat]::Png) } finally { $img.Dispose() }
+        }
         Write-Host "OK: $name"
     } catch { Write-Warning ("No se pudo preparar " + $name + ": " + $_.Exception.Message) }
     finally { if (Test-Path -LiteralPath $tmp) { Remove-Item -LiteralPath $tmp } }
