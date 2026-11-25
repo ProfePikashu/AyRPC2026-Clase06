@@ -1,4 +1,4 @@
-import {useEffect,useState} from 'react';
+import {useEffect,useRef,useState} from 'react';
 import {stages,drivers,apps,runtimes,tweaks,tests} from './data';
 import './slide.css';
 type Lab={rst:boolean;installed:boolean;user:string;phone:boolean;usb:boolean;activated:boolean;drivers:number[];apps:number[];runtimes:number[];tweaks:number[];protection:boolean;before:boolean;restore:boolean;updates:boolean};
@@ -35,7 +35,9 @@ type BootPage='off'|'post'|'boot'|'bios'|'loading'|'language'|'keyboard'|'setup'
 function WindowsSetup({rst,onDriver,onInstalled,onReset}:{rst:boolean;onDriver:()=>void;onInstalled:()=>void;onReset:number}){
  const [page,setPage]=useState<BootPage>('off'),[bootChoice,setBootChoice]=useState(0),[language,setLanguage]=useState('Español (Argentina)'),[keyboard,setKeyboard]=useState('Latinoamérica'),[edition,setEdition]=useState('Windows 11 Pro'),[productKey,setProductKey]=useState(''),[terms,setTerms]=useState(false),[diskSelected,setDiskSelected]=useState(false),[progress,setProgress]=useState(0),[confirm,setConfirm]=useState(false);
  useEffect(()=>{setPage('off');setProgress(0);setDiskSelected(false);setTerms(false);setConfirm(false);setProductKey('')},[onReset]);
- useEffect(()=>{if(page!=='post'&&page!=='loading'&&page!=='restart')return;const t=window.setTimeout(()=>{if(page==='post')setPage('boot');else if(page==='loading')setPage('language');else onInstalled()},page==='post'?2200:page==='loading'?1800:2200);return()=>window.clearTimeout(t)},[page,onInstalled]);
+ const installedRef=useRef(onInstalled);
+ useEffect(()=>{installedRef.current=onInstalled},[onInstalled]);
+ useEffect(()=>{if(page!=='post'&&page!=='loading'&&page!=='restart')return;const t=window.setTimeout(()=>{if(page==='post')setPage('boot');else if(page==='loading')setPage('language');else installedRef.current()},page==='post'?2200:page==='loading'?3000:2200);return()=>window.clearTimeout(t)},[page]);
  useEffect(()=>{if(page!=='installing')return;const t=window.setInterval(()=>setProgress(v=>Math.min(100,v+5)),180);return()=>window.clearInterval(t)},[page]);
  useEffect(()=>{if(page==='installing'&&progress===100)setPage('restart')},[page,progress]);
  useEffect(()=>{const key=(e:KeyboardEvent)=>{if(!['post','boot','bios'].includes(page))return;if(['F2','F8','ArrowUp','ArrowDown','Enter','Escape'].includes(e.key)){e.preventDefault();e.stopPropagation();if(e.key==='F2')setPage('bios');if(e.key==='F8'||e.key==='Escape')setPage('boot');if(page==='boot'&&['ArrowUp','ArrowDown'].includes(e.key))setBootChoice(v=>1-v);if(page==='boot'&&e.key==='Enter'&&bootChoice===0)setPage('loading')}};window.addEventListener('keydown',key,true);return()=>window.removeEventListener('keydown',key,true)},[page,bootChoice]);

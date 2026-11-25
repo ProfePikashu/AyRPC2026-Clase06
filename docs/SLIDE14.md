@@ -5,3 +5,5 @@ Estado compartido durante la visita a la slide. Ocho etapas: RST/VMD, OOBE local
 RST: diálogo de carga estilo Windows Setup, explorador de carpetas expandible con unidades D:, E: y X:, ruta de carpeta seleccionada, lista de controladores compatible/no compatible y carga del controlador VMD antes de detectar el SSD. Se eliminan subtítulos y avisos redundantes. Prueba visual local pendiente.
 
 Inicio del laboratorio: botón de encendido, POST estilo ASUS con F2/F8, menú UEFI, carga de Windows, idioma/teclado, instalación, clave opcional, edición, términos, selección de disco y carga RST existente. Progreso de instalación y reinicio antes del OOBE. Arte vectorial y pantallas recreadas, sin firmware ni instalador real. Verificación visual local pendiente.
+
+Corrección del arranque: el reloj del laboratorio renderiza el padre cada segundo y recreaba onInstalled, reiniciando el timeout de POST/carga/reinicio. El efecto ahora depende únicamente de la fase y usa una referencia al callback más reciente. Carga desde USB de 3 segundos. Verificación visual local pendiente.
