@@ -37,24 +37,7 @@ const routes:Record<Mode,Frame[]>={ok:[...common,
  {at:1,to:1,token:'BSOD',caption:'¡Se cayó todo! El software también dejó de funcionar.',technical:'Al detenerse el sistema operativo, las aplicaciones dejan de ejecutarse; no reciben una respuesta normal.',action:'error'},
  {at:1,to:1,token:'BSOD',caption:'El hardware sigue ahí, pero el sistema está detenido.',technical:'La animación reinicia solo para repetir la demostración; no representa una recuperación automática del sistema.',action:'error'}]};
 const names=['Software','Sistema operativo','Controlador','Hardware'];
-const colors=['#56b8ed','#8dd89a','#f7c85e','#f58b72'];
-function Glove(){return <g stroke="#12212b" strokeWidth="3" strokeLinejoin="round"><path d="M-10 10Q-17 5-15-2L-18-10Q-20-17-14-18Q-10-18-7-9L-7-22Q-7-28-1-27Q4-27 4-21V-12L8-24Q11-29 16-25Q19-23 16-17L13-9Q22-17 25-11Q29-6 20 2L14 12Q9 18-2 15Z" fill="#f8faf5"/><path d="M-5-4l4 5m4-8 4 5M-11 12l22 3" fill="none"/></g>}
-function Mascot({i,active,sleeping,action,reaction,hand}:{i:number;active:boolean;sleeping:boolean;action:string;reaction:'none'|'surprise'|'scratch'|'bsod'|'glitch';hand:'left'|'right'|'none'}){
- const c=colors[i];
- return <svg viewBox="0 0 180 168" className={'d3-mascot '+(active?'is-active ':'')+(sleeping?'is-asleep':'')+' reaction-'+reaction} data-action={active?action:''} data-hand={hand} aria-hidden="true">
- <ellipse cx="90" cy="150" rx="58" ry="8" fill="#000" opacity=".25"/>
- <g className="d3-body" stroke="#12212b" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round">
- <path d="M62 124v15M118 124v15" fill="none"/>
- <path d="M62 137q-19-2-20 10h35v-9zM118 137q19-2 20 10h-35v-9z" fill={c}/>
- <g className="d3-arm-left"><path d="M36 77Q15 83 20 103" fill="none"/><g transform="translate(20 104) scale(-1 1)"><Glove/></g></g>
- <g className="d3-arm-right"><path d="M144 77q21 6 16 26" fill="none"/><g transform="translate(160 104)"><Glove/></g></g>
- {i===0?<><rect x="31" y="28" width="118" height="100" rx="19" fill={c}/><path d="M32 49h116" stroke="#267aa9"/><circle cx="43" cy="39" r="2" fill="#fff" stroke="none"/><circle cx="52" cy="39" r="2" fill="#fff" stroke="none"/><path d="m77 108-9 6 9 6m26-12 9 6-9 6m-8-15-7 18" stroke="#246c94" strokeWidth="3"/></>:i===1?<><path d="M75 27V16h30v11l11-4 10 10-4 12H58l-4-12 10-10z" fill="#5fae70"/><rect x="32" y="32" width="116" height="94" rx="21" fill={c}/><rect x="42" y="42" width="96" height="74" rx="15" fill="#a3e5ad" stroke="#4b9460" strokeWidth="2"/></>:i===2?<><rect x="29" y="30" width="122" height="97" rx="32" fill={c}/><path d="M46 52q44-35 88 0" fill="none" stroke="#fff1bb" strokeWidth="5"/><path d="M79 112h22m-17-5-5 5 5 5m12-10 5 5-5 5" stroke="#9e6a22" strokeWidth="3"/><rect x="23" y="63" width="12" height="30" rx="5" fill="#d7a442"/><rect x="145" y="63" width="12" height="30" rx="5" fill="#d7a442"/></>:<><rect x="31" y="30" width="118" height="97" rx="17" fill={c}/><path d="M42 42h12v13m84-13h-12v13M42 114h12v-12m84 12h-12v-12" stroke="#b85d4c" strokeWidth="3" fill="none"/><rect x="69" y="106" width="42" height="12" rx="3" fill="#5d726f"/><path d="M76 102v4m9-4v4m10-4v4m9-4v4" strokeWidth="2"/></>}
- {reaction==='scratch'&&<g className="d3-scratch" stroke="#12212b"><path d="M142 79 Q169 61 151 38" fill="none"/><g transform="translate(150 36) rotate(-35)"><Glove/></g><path d="m146 33 5 5m0-8 5 5" strokeWidth="2"/></g>}
- {reaction==='surprise'&&<g fill="#f7c85e" stroke="none"><path d="M139 12l9-8 3 4-9 8zM158 22l12-2 1 5-12 2z"/><text x="19" y="23" fontSize="23" fontWeight="bold">!</text></g>}
- {reaction==='scratch'&&<text x="18" y="24" fill="#f7c85e" stroke="none" fontSize="23" fontWeight="bold">?</text>}
- <g className="d3-eyes">{reaction==='glitch'?<>{[67,113].map(x=><g key={x}><path d={`M${x-12} 65l24 26m0-26l-24 26`} stroke="#12212b" strokeWidth="7" fill="none"/></g>)}</>:reaction==='bsod'?<>{[67,113].map(x=><g key={x}><rect x={x-19} y="54" width="38" height="46" rx="8" fill="#0878d1" stroke="#10365d" strokeWidth="3"/><text x={x} y="74" textAnchor="middle" fill="white" stroke="none" fontSize="17" fontWeight="bold">:(</text><path d={`M${x-11} 82h22m-22 5h15m-15 5h19`} stroke="#e2f4ff" strokeWidth="1.5"/></g>)}</>:sleeping?<><path d="M54 76q13 10 26 0m20 0q13 10 26 0" fill="none" strokeWidth="5"/><text x="132" y="24" fill="#a4b8c5" stroke="none" fontSize="18" fontWeight="bold">zZ</text></>:<>{[67,113].map(x=><g key={x}><ellipse cx={x} cy="77" rx={reaction==='surprise'?21:19} ry={reaction==='surprise'?28:24} fill="#fff" strokeWidth="3.5"/><ellipse className="d3-pupil" cx={x+(reaction==='scratch'?-6:active?(hand==='left'?-7:7):3)} cy={reaction==='scratch'?73:active?87:79} rx={reaction==='surprise'?6:10} ry={reaction==='surprise'?9:14} fill="#16242b" stroke="none"/><circle cx={x+6} cy="73" r="3.5" fill="white" stroke="none"/></g>)}</>}</g>
- </g></svg>
-}
+import {Mascot,colors} from './Mascot';
 export default function Slide(){
  const [mode,setMode]=useState<Mode>('ok'),[index,setIndex]=useState(0),[paused,setPaused]=useState(false);
  const frames=routes[mode],frame=frames[index];
