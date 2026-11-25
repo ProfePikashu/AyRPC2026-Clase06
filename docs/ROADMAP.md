@@ -1,6 +1,6 @@
 # Clase 06
 
-Arranque: visor reutilizado de Clase 05, portada y temario. Contenido 01–15 aprobado visualmente por el docente, salvo comprobación final de branding y opening. Scripts de release adaptados. Pendiente copiar originales, TypeScript, smoke real file:// y revisión de ambos HTML. No publicar como release final sin evidencia. El opening y logo deben copiarse desde los originales autorizados; no recrearlos.
+**Estado al 25/11/2026: desarrollo cerrado y release PC/Mobile aprobado por el docente.** Visor reutilizado de Clase 05, contenido 01–15 aprobado, branding original recuperado y glosario integral incorporado. El docente confirmó éxito del release final en PowerShell; el log final y la ubicación exacta del release no fueron remitidos. No consta todavía distribución en Drive/Classroom. Mantener los HTML previos y los recursos originales.
 
 1. Portada: Drivers y Herramientas
 2. Temario: Recorrido de la clase
@@ -17,3 +17,5 @@ Arranque: visor reutilizado de Clase 05, portada y temario. Contenido 01–15 ap
 13. Hiren’s BootCD PE: Entorno de rescate
 14. Laboratorio técnico: Preparación profesional de Windows
 15. Consultas: Cierre animado
+
+Ver [cierre de la clase](CIERRE-CLASE06-2026-11-25.md), [procedimiento de release](RELEASE-CLASE06.md) y [glosario](GLOSARIO-CLASE06.md).
