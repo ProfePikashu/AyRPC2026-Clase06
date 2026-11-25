@@ -24,7 +24,7 @@ $assets = [ordered]@{
     'hdsentinel.png' = @('https://www.hdsentinel.com/help/en/img_01_mainwindow.jpg')
     'hddscan.png' = @('https://hddscan.com/img/doc/07.jpg')
     'heaven.png' = @('https://www.alktech.co/hs-fs/hubfs/ASUS%20DUAL%20Radeon%20RX%206650%20XT%20OC%208GB%20GDDR6/Ungine%20Test%20without%20OBS.jpg?height=1080&name=Ungine+Test+without+OBS.jpg&width=1920')
-    '3dmark.png' = @('https://benchmarks.ul.com/images/contentboxes/3dmark-stress-test-time-spy-cb.jpg')
+    '3dmark.png' = @('https://www.notebookcheck.net/fileadmin/_processed_/csm_gtx_1070_time_spy_stress_test_36ab34b4e7.png', 'https://media.overclock3d.net/2023/10/3dmark-adds-game-performance-estimation-to-their-benchmark-suite_6524eaded05c6.jpeg', 'https://image.noelshack.com/fichiers/2024/06/7/1707661731-3dmark-v3.png')
     'testmem5.png' = @('https://raw.githubusercontent.com/CoolCmd/TestMem5/main/Screenshot.png')
     'ycruncher.png' = @('https://www.computerbase.de/forum/attachments/1668035358805-png.1281746/')
     'xtu.png' = @('https://www.comptoir-hardware.com/images/stories/articles/cpu/alder_lake/12900k_xtu_t.png')
