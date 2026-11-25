@@ -29,7 +29,7 @@ export function GlossaryProvider({children}:{children:ReactNode}){
  },[visible,close]);
  const filtered=useMemo(()=>glossary.filter(x=>(category==='Todos'||x.category===category)&&
   (!query||normalize([x.term,x.definition,x.detail,x.example,x.full??''].join(' ')).includes(normalize(query)))),[category,query]);
- const item=glossary.find(x=>x.term===selected)??glossary[0];
+ const item=filtered.find(x=>x.term===selected)??filtered[0]??glossary.find(x=>x.term===selected)??glossary[0];
  return <Context.Provider value={{open,close}}>
   {children}
   {visible&&createPortal(<div className="glossary-overlay" onPointerDown={e=>{if(e.target===e.currentTarget)close()}}>
@@ -43,11 +43,11 @@ export function GlossaryProvider({children}:{children:ReactNode}){
     </div>
     <div className="glossary-content">
      <aside className="glossary-list">
-      <label className="glossary-search-label">Buscar concepto
-       <input ref={search} type="search" placeholder="Driver, INF, PnP..." value={query} onChange={e=>setQuery(e.target.value)} />
+      <label className="glossary-search-label">Buscar concepto ({filtered.length}/{glossary.length})
+       <input ref={search} type="search" placeholder="Driver, INF, PnP, comandos..." value={query} onChange={e=>setQuery(e.target.value)} />
       </label>
       <div className="glossary-terms" aria-label="Lista de conceptos">
-       {filtered.map(t=><button type="button" key={t.term} className={selected===t.term?'is-selected':''}
+       {filtered.map(t=><button type="button" key={t.term} className={item.term===t.term?'is-selected':''}
         onClick={()=>{setSelected(t.term);setTableMode(false)}} aria-current={selected===t.term?'true':undefined}><strong>{t.term}</strong><small>{t.category}</small></button>)}
        {filtered.length===0&&<p className="glossary-empty">Sin coincidencias.</p>}
       </div>

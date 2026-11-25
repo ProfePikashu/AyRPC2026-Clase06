@@ -85,3 +85,6 @@
 .glossary-source{margin-top:15px;padding:12px 13px;background:#103045;border-left:3px solid #00d9e8;border-radius:6px;display:flex;flex-direction:column;gap:8px}
 .glossary-source strong{font:800 10px Consolas,monospace;color:#ffc44d;letter-spacing:.03em}
 .glossary-source a{color:#7de6f4;font-size:13px;line-height:1.5;text-underline-offset:3px;overflow-wrap:anywhere}
+
+/* Expanded course glossary: categories remain usable in small landscapes. */
+.glossary-categories{flex-wrap:nowrap;overflow-x:auto;flex-shrink:0;scrollbar-width:thin}.glossary-categories button{white-space:nowrap;flex-shrink:0}.glossary-window{height:min(93dvh,840px)}@media(max-width:900px) and (orientation:landscape){.glossary-window{height:95dvh;max-height:95dvh}.glossary-header{padding:8px 14px}.glossary-header h2{font-size:18px}.glossary-categories{padding:5px 12px}.glossary-footer{padding:5px 10px}.glossary-list{padding-top:8px}.glossary-definition{padding-top:10px}}
