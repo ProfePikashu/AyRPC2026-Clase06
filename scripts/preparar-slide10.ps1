@@ -4,17 +4,17 @@ $dest = Join-Path $PSScriptRoot '..\public\clase6\slide10'
 New-Item -ItemType Directory -Path $dest -Force | Out-Null
 $assets = @{
     'taskmgr.png' = 'https://support.microsoft.com/en-us/windows/media/task-manager-performance.png'
-    'dxdiag.png' = 'https://www.intel.com/content/dam/support/us/en/images/graphics/sb/img/22556_image1.jpg'
+    'dxdiag.png' = 'https://extras.foroswindows.com/img/post/69/version-directx-directx-12-ss.jpg'
     'perfmon.png' = 'https://learn.microsoft.com/en-us/troubleshoot/windows-server/performance/media/troubleshoot-performance-problems-in-windows/performance-monitor-and-data-collector-sets.png'
     'resmon.png' = 'https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS0zNzUwMDgtOTI5MDhpNTBGMTdCREU2N0JDNDcxOQ?image-dimensions=564x398&revision=2'
-    'services.png' = 'https://www.elevenforum.com/attachments/services-1-png.14766/'
-    'diskmgmt.png' = 'https://www.elevenforum.com/attachments/disk_management_customize_view-1-png.115932/'
+    'services.png' = 'https://support.auvik.com/hc/article_attachments/38403367742612'
+    'diskmgmt.png' = 'https://learn.microsoft.com/en-us/troubleshoot/windows-server/backup-and-storage/media/troubleshoot-disk-management/healthy-volume.png'
     'devmgmt.png' = 'https://km-ap.asus.com/uploads/PhotoLibrarys/8a53fc79-6a00-4a96-8408-a7e886967aef/20231101142421351_EN_1.png'
     'msinfo32.webp' = 'https://bcdn.askleo.com/wp-content/uploads/2022/07/msinfo32-1200x630.jpg.webp'
-    'eventvwr.webp' = 'https://www.elevenforum.com/attachments/41-webp.166841/'
-    'msconfig.png' = 'https://www.elevenforum.com/attachments/change_default_os_msconfig-1-png.25537/'
+    'eventvwr.png' = 'https://learn.microsoft.com/en-us/troubleshoot/windows-server/performance/media/troubleshoot-unexpected-reboots-system-event-logs/system-event-log-41-1001-6008.png'
+    'msconfig.png' = 'https://www.guidingtech.com/wp-content/uploads/The-General-Tab.png'
     'reliability.webp' = 'https://rebootdoctor.com/images/blog/reliability-monitor-windows-11/step2-stability-chart-critical-event.webp'
-    'sysdm.png' = 'https://www.elevenforum.com/attachments/change_default_os_system_properties-1-png.25539/'
+    'sysdm.png' = 'https://windowsreport.com/wp-content/uploads/2022/04/system-properties-1.png'
 }
 foreach ($name in $assets.Keys) {
     $path = Join-Path $dest $name
