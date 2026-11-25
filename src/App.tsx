@@ -17,9 +17,10 @@ import ManagementSlide from './slides/09-administracion/Slide';
 import NativeToolsSlide from './slides/10-herramientas-nativas/Slide';
 import MaintenanceSlide from './slides/11-mantenimiento/Slide';
 import DiagnosticsSlide from './slides/12-diagnostico/Slide';
+import HirenSlide from './slides/13-hirens/Slide';
 import {TopicSlide} from './slides/TopicSlide';
 const labels=topics.map(topic=>topic.short);
-const slides=[Slide01,...topics.slice(1).map((_,i)=>({go}:{go:(value:number)=>void})=>i===1?<DriverSlide/>:i===2?<DeviceSlide/>:i===3?<InstallSlide/>:i===4?<ThirdPartySlide/>:i===5?<HardwareIdSlide/>:i===6?<ManualInstallSlide/>:i===7?<ManagementSlide/>:i===8?<NativeToolsSlide/>:i===9?<MaintenanceSlide/>:i===10?<DiagnosticsSlide/>:<TopicSlide index={i+1} go={go}/>)]
+const slides=[Slide01,...topics.slice(1).map((_,i)=>({go}:{go:(value:number)=>void})=>i===1?<DriverSlide/>:i===2?<DeviceSlide/>:i===3?<InstallSlide/>:i===4?<ThirdPartySlide/>:i===5?<HardwareIdSlide/>:i===6?<ManualInstallSlide/>:i===7?<ManagementSlide/>:i===8?<NativeToolsSlide/>:i===9?<MaintenanceSlide/>:i===10?<DiagnosticsSlide/>:i===11?<HirenSlide/>:<TopicSlide index={i+1} go={go}/>)]
 type ZoomGesture=
  |{kind:'pinch';distance:number;zoom:number;pan:Pan;point:Point}
  |{kind:'drag';point:Point;pan:Pan};
