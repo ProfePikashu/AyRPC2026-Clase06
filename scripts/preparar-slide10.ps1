@@ -15,6 +15,10 @@ $assets = @{
     'msconfig.png' = 'https://www.guidingtech.com/wp-content/uploads/The-General-Tab.png'
     'reliability.webp' = 'https://rebootdoctor.com/images/blog/reliability-monitor-windows-11/step2-stability-chart-critical-event.webp'
     'sysdm.png' = 'https://windowsreport.com/wp-content/uploads/2022/04/system-properties-1.png'
+    'msconfig-boot.png' = 'https://www.guidingtech.com/wp-content/uploads/The-Boot-Tab.png'
+    'msconfig-services.png' = 'https://www.guidingtech.com/wp-content/uploads/The-Services-Tab.png'
+    'msconfig-startup.png' = 'https://www.guidingtech.com/wp-content/uploads/The-Startup-Tab.png'
+    'msconfig-tools.png' = 'https://www.guidingtech.com/wp-content/uploads/The-Tools-Tab-1.png'
 }
 foreach ($name in $assets.Keys) {
     $path = Join-Path $dest $name
