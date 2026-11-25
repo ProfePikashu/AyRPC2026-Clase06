@@ -3,6 +3,7 @@ Add-Type -AssemblyName System.Drawing
 $dest = Join-Path $PSScriptRoot '..\public\clase6\slide10'
 New-Item -ItemType Directory -Path $dest -Force | Out-Null
 $assets = @{
+    'regedit.png' = 'https://www.digitalcitizen.life/wp-content/uploads/2023/07/regedit-5.png'
     'taskmgr.png' = 'https://support.microsoft.com/en-us/windows/media/task-manager-performance.png'
     'dxdiag.png' = 'https://extras.foroswindows.com/img/post/69/version-directx-directx-12-ss.jpg'
     'perfmon.png' = 'https://learn.microsoft.com/en-us/troubleshoot/windows-server/performance/media/troubleshoot-performance-problems-in-windows/performance-monitor-and-data-collector-sets.png'
