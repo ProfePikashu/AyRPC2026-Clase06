@@ -9,3 +9,5 @@ Inicio del laboratorio: botón de encendido, POST estilo ASUS con F2/F8, menú U
 Corrección del arranque: el reloj del laboratorio renderiza el padre cada segundo y recreaba onInstalled, reiniciando el timeout de POST/carga/reinicio. El efecto ahora depende únicamente de la fase y usa una referencia al callback más reciente. Carga desde USB de 3 segundos. Verificación visual local pendiente.
 
 OOBE: pantalla de conexión a red recreada con ilustración vectorial propia, panel Ethernet y botón Siguiente desactivado. Shift+F10 real y acceso visual a CMD ampliado; comando localonly abre formulario de cuenta local con contraseña opcional y confirmación. La VM gana espacio al reducir panel lateral a 170 px. No se usan capturas originales; QA visual pendiente.
+
+Cuenta local: el botón Siguiente solo exige nombre no vacío y contraseñas coincidentes si se completan. Se permite entrar directamente a la etapa OOBE para demostración sin repetir el instalador; al completar la cuenta se registra la instalación previa y la detección del SSD como prerrequisitos de ese escenario. Prueba local pendiente.
